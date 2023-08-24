@@ -18,15 +18,15 @@
 ### **Parte III - Evaluación de Desempeño**
 
 1. Un solo hilo.
-![1-Hilo](img\visualvm1.png)
+![1-Hilo](/img/visualvm1.png)
 2. Tantos hilos como núcleos de procesamiento: el número de núcleos es 8 en este caso.
-![8-Hilos](img\visualvm8.png)
+![8-Hilos](/img/visualvm8.png)
 3. Tantos hilos como el doble de núcleos de procesamiento: 16 núcleos.
-![16-Hilos](img\visualvm16.png)
+![16-Hilos](/img/visualvm16.png)
 4. 50 hilos.
-![50-Hilos](img\visualvm50.png)
+![50-Hilos](/img/visualvm50.png)
 5. 100 hilos.
-![100-Hilos](img\visualvm100.png)
+![100-Hilos](/img/visualvm100.png)
 
     Con lo anterior, y con los tiempos de ejecución dados, se hace una gráfica de tiempo de solución vs. número de hilos.
 
