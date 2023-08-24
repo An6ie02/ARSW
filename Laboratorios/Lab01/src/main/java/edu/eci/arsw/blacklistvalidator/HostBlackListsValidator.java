@@ -41,10 +41,12 @@ public class HostBlackListsValidator {
         int checkedListsCount = 0;
         int serversPerThread = skds.getRegisteredServersCount() / N;
         LinkedList<Integer> blackListOcurrences = new LinkedList<>();
-        List<HostBlackListsThread> threads = new LinkedList<>();
+        LinkedList<HostBlackListsThread> threads = new LinkedList<>();
 
         for (int i = 0; i < N; i++) {
-            HostBlackListsThread threadI = new HostBlackListsThread(i * serversPerThread, (i + 1) * serversPerThread, ipaddress);
+            int start = i * serversPerThread;
+            int end = (i == N-1) ? skds.getRegisteredServersCount() : start + serversPerThread;
+            HostBlackListsThread threadI = new HostBlackListsThread(start, end, ipaddress);
             threads.add(threadI);
             threadI.start();
         }
@@ -52,7 +54,7 @@ public class HostBlackListsValidator {
         for (HostBlackListsThread thread : threads) {
             try {
                 thread.join();
-                checkedListsCount += thread.getCheckedListsCount();
+                checkedListsCount += thread.getcheckedListsCountThread();
                 blackListOcurrences.addAll(thread.getBlackListOcurrences());
             } catch (InterruptedException ex) {
                 Logger.getLogger(HostBlackListsValidator.class.getName()).log(Level.SEVERE, null, ex);
