@@ -30,7 +30,7 @@
 
     Con lo anterior, y con los tiempos de ejecución dados, se hace una gráfica de tiempo de solución vs. número de hilos.
 
-    ![Gráfica](img\grafica_T_H.png)
+    ![Gráfica](img/grafica_T_H.png)
 
     En la gráfica se observa que entre mayor es el número de hilos, menor es el tiempo de ejecución. Pero llega a un punto donde tener más hilos no marca considerablemente la diferencia en tiempo de ejecución.
 
