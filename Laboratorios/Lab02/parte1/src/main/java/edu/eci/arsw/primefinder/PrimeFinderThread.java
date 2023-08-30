@@ -3,19 +3,24 @@ package edu.eci.arsw.primefinder;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The class PrimeFinderThread is a thread that finds prime numbers in a range
+ * @author Angie Mojica
+ * @author Daniel Santanilla
+ */
 public class PrimeFinderThread extends Thread {
 
-    int a, b, name;
-    private Boolean stop = false;
+    private int a, b, name;
+    private boolean stop;
 
     private List<Integer> primes = new LinkedList<Integer>();
 
-    public PrimeFinderThread(int a, int b, int name, Boolean stop) {
+    public PrimeFinderThread(int a, int b, int name) {
         super();
         this.a = a;
         this.b = b;
         this.name = name;
-        this.stop = stop;
+        this.stop = false;
     }
 
     public void run() {
@@ -23,19 +28,18 @@ public class PrimeFinderThread extends Thread {
             if (isPrime(i)) {
                 primes.add(i);
                 System.out.println("Thread " + name + " found prime: " + i);
-                synchronized (stop) {
+                synchronized (this) {
                     while (stop) {
                         try {
                             System.out.println("Thread " + name + " is stoping...");
-                            stop.wait();
-                        } catch (Exception e) {
+                            wait();
+                        } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                 }
             }
         }
-
     }
 
     boolean isPrime(int n) {
@@ -52,15 +56,13 @@ public class PrimeFinderThread extends Thread {
         return primes;
     }
 
-    public synchronized void stopExec() throws InterruptedException {
+    public void stopExec() {
         stop = true;
     }
 
-    public void resumeExec() {
-        synchronized (stop) {
-            stop = false;
-            stop.notifyAll();
-        }
+    public synchronized void resumeExec() {
+        stop = false;
+        notify();
     }
 
 }
