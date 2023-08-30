@@ -4,6 +4,8 @@ Arquitecturas de Software – ARSW
 
 #### Taller – programación concurrente, condiciones de carrera y sincronización de hilos. EJERCICIO INDIVIDUAL O EN PAREJAS.
 
+#### Integrantes : Angie Natalia Mojica - Daniel Antonio Santanilla
+
 ##### Parte I – Antes de terminar la clase.
 
 Creación, puesta en marcha y coordinación de hilos.
