@@ -10,7 +10,13 @@ Creación, puesta en marcha y coordinación de hilos.
 
 1. Revise el programa “primos concurrentes” (en la carpeta parte1), dispuesto en el paquete edu.eci.arsw.primefinder. Este es un programa que calcula los números primos entre dos intervalos, distribuyendo la búsqueda de los mismos entre hilos independientes. Por ahora, tiene un único hilo de ejecución que busca los primos entre 0 y 30.000.000. Ejecútelo, abra el administrador de procesos del sistema operativo, y verifique cuantos núcleos son usados por el mismo.
 
-2. Modifique el programa para que, en lugar de resolver el problema con un solo hilo, lo haga con tres, donde cada uno de éstos hará la tarcera parte del problema original. Verifique nuevamente el funcionamiento, y nuevamente revise el uso de los núcleos del equipo.
+    ![cantidadnucleos](./img/procesador1hiloparteI.png)
+
+1. Modifique el programa para que, en lugar de resolver el problema con un solo hilo, lo haga con tres, donde cada uno de éstos hará la tarcera parte del problema original. Verifique nuevamente el funcionamiento, y nuevamente revise el uso de los núcleos del equipo.
+
+    ![ejecicionunhilo](./img/ejecucion1hilo.png)
+
+    ![ejeciciontreshilos](./img/ejecucion1hilo.png)
 
 3. Lo que se le ha pedido es: debe modificar la aplicación de manera que cuando hayan transcurrido 5 segundos desde que se inició la ejecución, se detengan todos los hilos y se muestre el número de primos encontrados hasta el momento. Luego, se debe esperar a que el usuario presione ENTER para reanudar la ejecución de los mismo.
 
@@ -44,16 +50,38 @@ Taller.
 
     b.  Puede utilizarse el método join() de la clase Thread para sincronizar el hilo que inicia la carrera, con la finalización de los hilos de los galgos.
 
+    ```java
+    for (int i = 0; i < can.getNumCarriles(); i++) {
+        try {
+            galgos[i].join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    ```
+    
 2.  Una vez corregido el problema inicial, corra la aplicación varias
     veces, e identifique las inconsistencias en los resultados de las
     mismas viendo el ‘ranking’ mostrado en consola (algunas veces
     podrían salir resultados válidos, pero en otros se pueden presentar
     dichas inconsistencias). A partir de esto, identifique las regiones
     críticas () del programa.
+    
+    ```java
+    carril.finish();
+    int ubicacion = regl.getUltimaPosicionAlcanzada();
+    regl.setUltimaPosicionAlcanzada(ubicacion + 1);
+    System.out.println("El galgo " + this.getName() + " llego en la posicion " + ubicacion);
+    if (ubicacion == 1) {
+        regl.setGanador(this.getName());
+    }
+    ```
 
 3.  Utilice un mecanismo de sincronización para garantizar que a dichas
     regiones críticas sólo acceda un hilo a la vez. Verifique los
     resultados.
+
+    ![Carrera](./img/galgocarrera.png)
 
 4.  Implemente las funcionalidades de pausa y continuar. Con estas,
     cuando se haga clic en ‘Stop’, todos los hilos de los galgos
@@ -63,15 +91,11 @@ Taller.
 
 ## Criterios de evaluación
 
-1. Funcionalidad.
-
-    1.1. La ejecución de los galgos puede ser detenida y resumida consistentemente.
-    
+1. Funcionalidad.\
+    1.1. La ejecución de los galgos puede ser detenida y resumida consistentemente.\
     1.2. No hay inconsistencias en el orden de llegada registrado.
     
-2. Diseño.   
-
-    2.1. Se hace una sincronización de sólo la región crítica (sincronizar, por ejemplo, todo un método, bloquearía más de lo necesario).
-    
-    2.2. Los galgos, cuando están suspendidos, son reactivados son sólo un llamado (usando un monitor común).
+2. Diseño.\
+    2.1. Se hace una sincronización de sólo la región crítica (sincronizar, por ejemplo, todo un método, bloquearía más de lo necesario).\
+    2.2. Los galgos, cuando están suspendidos, son reactivados son sólo un llamado (usando un monitor común).
 
