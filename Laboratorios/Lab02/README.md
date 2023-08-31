@@ -18,7 +18,7 @@ Creación, puesta en marcha y coordinación de hilos.
 
     ![ejecicionunhilo](./img/ejecucion1hilo.png)
 
-    ![ejeciciontreshilos](./img/ejecucion1hilo.png)
+    ![ejeciciontreshilos](./img/ejecucion3hilos.png)
 
 3. Lo que se le ha pedido es: debe modificar la aplicación de manera que cuando hayan transcurrido 5 segundos desde que se inició la ejecución, se detengan todos los hilos y se muestre el número de primos encontrados hasta el momento. Luego, se debe esperar a que el usuario presione ENTER para reanudar la ejecución de los mismo.
 

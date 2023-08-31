@@ -11,16 +11,18 @@ import java.util.List;
 public class PrimeFinderThread extends Thread {
 
     private int a, b, name;
-    private boolean stop;
+    private boolean execution;
+    private Object lockObject;
 
     private List<Integer> primes = new LinkedList<Integer>();
 
-    public PrimeFinderThread(int a, int b, int name) {
+    public PrimeFinderThread(int a, int b, int name, Object lockObject) {
         super();
         this.a = a;
         this.b = b;
         this.name = name;
-        this.stop = false;
+        this.execution = true;
+        this.lockObject = lockObject;
     }
 
     public void run() {
@@ -28,11 +30,11 @@ public class PrimeFinderThread extends Thread {
             if (isPrime(i)) {
                 primes.add(i);
                 System.out.println("Thread " + name + " found prime: " + i);
-                synchronized (this) {
-                    while (stop) {
+                synchronized (lockObject) {
+                    if (!execution) {
                         try {
                             System.out.println("Thread " + name + " is stoping...");
-                            wait();
+                            lockObject.wait();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -56,13 +58,8 @@ public class PrimeFinderThread extends Thread {
         return primes;
     }
 
-    public void stopExec() {
-        stop = true;
-    }
-
-    public synchronized void resumeExec() {
-        stop = false;
-        notify();
+    public void setExecution(boolean execution) {
+        this.execution = execution;
     }
 
 }
