@@ -34,7 +34,7 @@ public class Immortal extends Thread {
 
     public void run() {
 
-        while (true) {
+        while (this.getHealth() > 0 && immortalsPopulation.size() > 1) {
             synchronized (immortalsPopulation) {
                 while (!execution) {
                     try {
@@ -58,6 +58,9 @@ public class Immortal extends Thread {
             im = immortalsPopulation.get(nextFighterIndex);
 
             this.fight(im);
+            if (im.getHealth() <= 0) {
+                immortalsPopulation.remove(im);
+            }
 
             try {
                 Thread.sleep(1);
@@ -70,45 +73,35 @@ public class Immortal extends Thread {
     }
 
     public void fight(Immortal i2) {
-
-        if (i2.getHealth() > 0) {
-            Immortal fistLock = minIdInmortal(this, i2);
-            Immortal secondLock = fistLock == this ? i2 : this;
-            synchronized (fistLock) {
-                try {
-                    fistLock.wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Immortal.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                synchronized (secondLock) {
-                    try {
-                        secondLock.wait();
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Immortal.class.getName()).log(Level.SEVERE, null, ex);
+        Immortal firstLock = minImmortalHash(i2);
+        Immortal secondLock = firstLock == this ? i2 : this;
+        synchronized (firstLock) {
+            synchronized (secondLock) {
+                if (this.getHealth() > 0) {
+                    if (i2.getHealth() > 0) {
+                        i2.changeHealth(i2.getHealth() - defaultDamageValue);
+                        this.health += defaultDamageValue;
+                        updateCallback.processReport("Fight: " + this + " vs " + i2 + "\n");
+                    } else {
+                        updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
                     }
-                    i2.changeHealth(i2.getHealth() - defaultDamageValue);
-                    this.health += defaultDamageValue;
-                    // VER COMO SE HACE EL NOTIFY PARA CADA UNO
-                    // fistLock.notify();
-                    // secondLock.notify();
                 }
             }
-            updateCallback.processReport("Fight: " + this + " vs " + i2 + "\n");
-        } else {
-            updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
         }
-
     }
-
-    public Immortal minIdInmortal(Immortal i1, Immortal i2) {
-        Immortal minId = null;
-        // TOMAR EL ULTIMO CARACTER, CONVERTIRLO A NUMERO Y COMPARARLOS
-        if (Character.getNumericValue(i1.getName()[-1]) < Character.getNumericValue(i2.getName()[-1])) {
-            minId = i1;
+    
+    public Immortal minImmortalHash(Immortal i2) {
+        Immortal minImmortal;
+        int immortalOneHash = System.identityHashCode(this);
+        int immortalTwoHash = System.identityHashCode(i2);
+        if (immortalOneHash < immortalTwoHash) {
+            minImmortal = this;
+        } else if (immortalOneHash > immortalTwoHash) {
+            minImmortal = i2;
         } else {
-            minId = i2;
+            minImmortal = this;
         }
-        return minId;
+        return minImmortal;
     }
 
     public void changeHealth(int v) {
