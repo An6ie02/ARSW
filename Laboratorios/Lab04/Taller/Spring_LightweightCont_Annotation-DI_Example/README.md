@@ -1,5 +1,9 @@
 # Escuela Colombiana de Ingeniería
 # Arquitecturas de Software - ARSW
+
+#### Integrantes : Angie Natalia Mojica - Daniel Antonio Santanilla
+
+
 ### Taller – Principio de Inversión de dependencias, Contenedores Livianos e Inyección de dependencias.
 
 Parte I. Ejercicio básico.
