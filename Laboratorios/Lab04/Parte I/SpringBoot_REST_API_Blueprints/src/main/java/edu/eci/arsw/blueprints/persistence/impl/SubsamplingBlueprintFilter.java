@@ -12,7 +12,7 @@ import edu.eci.arsw.blueprints.persistence.BlueprintsFilter;
  * @author Angie Mojica
  * @author Daniel Santanilla
  */
-//@Component
+// @Component
 public class SubsamplingBlueprintFilter implements BlueprintsFilter {
     
     @Override

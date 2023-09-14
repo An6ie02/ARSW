@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintsFilter;
 
 /**
@@ -19,7 +20,7 @@ public class RedundancyBlueprintFilter implements BlueprintsFilter {
     public Blueprint filterBlueprint(Blueprint bp) {
         Blueprint filteredBp = new Blueprint(bp.getAuthor(), bp.getName());
         for (int i = 0; i < bp.getPoints().size() - 1; i++) {
-            if (!bp.getPoints().get(i).equals(bp.getPoints().get(i + 1))) {
+            if (!isRedundant(bp.getPoints().get(i), bp.getPoints().get(i + 1))) {
                 filteredBp.addPoint(bp.getPoints().get(i));
             }
         }
@@ -34,6 +35,10 @@ public class RedundancyBlueprintFilter implements BlueprintsFilter {
             filteredBlueprints.add(filterBlueprint(bp));
         }
         return filteredBlueprints;
+    }
+
+    public boolean isRedundant(Point p1, Point p2) {
+        return p1.getX() == p2.getX() && p1.getY() == p2.getY();
     }
 
 }

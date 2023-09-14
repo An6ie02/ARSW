@@ -43,4 +43,6 @@ En este ejercicio se va a construír un modelo de clases para la capa lógica de
 
 		Se crea una implementación de la interfaz `BlueprintsFilter` llamada `SubsamplingFilter` que se encarga de eliminar 1 de cada 2 puntos del plano, de manera intercalada.
 
-5. Agrege las pruebas correspondientes a cada uno de estos filtros, y pruebe su funcionamiento en el programa de prueba, comprobando que sólo cambiando la posición de las anotaciones -sin cambiar nada más-, el programa retorne los planos filtrados de la manera (A) o de la manera (B). 
+5. Agrege las pruebas correspondientes a cada uno de estos filtros, y pruebe su funcionamiento en el programa de prueba, comprobando que sólo cambiando la posición de las anotaciones -sin cambiar nada más-, el programa retorne los planos filtrados de la manera (A) o de la manera (B).
+
+	Se agregan las pruebas en `RedundancyFilterTest` y `SubsamplingFilterTest` y se prueba el funcionamiento en la clase `Main` con la "prueba 4 - filtros".
